@@ -1,0 +1,17 @@
+{% extends 'todo/base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+<div class="container">
+ <div class="form-group col-md-6">
+   <h2> You've Logged out succesfully</h2>
+   <hr>
+
+      
+           Click here to  <a href={% url 'login' %} class=" btn-primary">Log in </a>again or Go to the  <a href={% url 'todo' %} class=" btn-primary">Homepage</a>
+               
+</div>
+</div>
+</div>
+{% endblock content %}
+
