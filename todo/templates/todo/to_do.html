@@ -2,11 +2,37 @@
 {% load static %}
 {% block content %}
 {% if to_do %}
- <div class="container">
-        <h2 class="page-header"> <i class="icon-list"></i>Upcoming Tasks </h2>
-        <div class="box-element col-md-10">    
+{% if searched %}
+<div class="container">
+
+ <div class="box-element col-md-10">    
     <ul class="list-group">
     {% for todo in to_do %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{todo.text}}
+        
+          <span>
+            <span class="badge badge-danger badge-pill">{{todo.check_rem}} left</span>
+            <a class="makeAction" data-add="add" data-id="{{todo.id}}" href="{% url 'update_form' todo.id %}"><i class="fa m-1">&#xf040;</i></a><a  data-id="{{todo.id}}"  class="makeAction" data-remove="remove"  href="#">
+          <i class="fa fa-trash m-1"></i></a>
+        </span>
+        </li>
+ {% endfor %}
+</ul>
+      <div >
+    
+      </div>
+</div>
+
+
+{% else %}
+ <div class="container">
+
+ {% if yesterday %}
+  <h2 class="page-header"> <i class="icon-list"></i>Yesterday event{{ yesterday|pluralize }}</h2>
+        <div class="box-element col-md-10">    
+    <ul class="list-group">
+    {% for todo in yesterday %}
         <li class="list-group-item d-flex justify-content-between align-items-center">
           {{todo.text}}
         
@@ -19,11 +45,99 @@
        
           {% endfor %}
       </ul>
-      <a href="{% url 'create_task' %}" style="float:right;" style="color:white;" class="btn btn-outline-primary m-4">Add Task </i><i class="fa">&#xf271;</i></a>
+      <div >
+    
+      </div>
+      
 </div>
 
    </div>
 </div>
+
+ {% else %}
+<div ><h2 > No events for Yesterday</h2>
+</div> 
+<hr>
+ {% endif %}
+       
+<br>
+<!--hhhhhhhhhhhhhhhhhhhhhhhhh-->
+<div class="container">
+
+ {% if to_day %}
+  <h2 class="page-header"> <i class="icon-list"></i>Today event{{ to_day|pluralize }}</h2>
+        <div class="box-element col-md-10">    
+    <ul class="list-group">
+    {% for todo in to_day %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{todo.text}}
+        
+          <span>
+            <span class="badge badge-danger badge-pill">{{todo.check_rem}} left</span>
+            <a class="makeAction" data-add="add" data-id="{{todo.id}}" href="{% url 'update_form' todo.id %}"><i class="fa m-1">&#xf040;</i></a><a  data-id="{{todo.id}}"  class="makeAction" data-remove="remove"  href="#">
+          <i class="fa fa-trash m-1"></i></a>
+        </span>
+        </li>
+       
+          {% endfor %}
+      </ul>
+      <div >
+      <a href="{% url 'create_task' %}" style="float:right;" style="color:white;" class="btn btn-outline-primary m-4">Add Task </i><i class="fa">&#xf271;</i></a>
+    
+      </div>
+      
+</div>
+
+   </div>
+</div>
+
+ {% else %}
+<div ><h2 > No events Today</h2>
+</div> 
+<hr>
+ {% endif %}
+       
+<br>
+<!--hhhhhhhhhhhhhhhhhhhhhhhhh-->
+<br>
+<br>
+<div class="container">
+
+ {% if to_morrow %}
+  <h2 class="page-header"> <i class="icon-list"></i>Tomorrow event{{ to_morrow|pluralize }}
+</h2>
+        <div class="box-element col-md-10">    
+    <ul class="list-group">
+    {% for todo in to_morrow %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{todo.text}}
+        
+          <span>
+            <span class="badge badge-danger badge-pill">{{todo.check_rem}} left</span>
+            <a class="makeAction" data-add="add" data-id="{{todo.id}}" href="{% url 'update_form' todo.id %}"><i class="fa m-1">&#xf040;</i></a><a  data-id="{{todo.id}}"  class="makeAction" data-remove="remove"  href="#">
+          <i class="fa fa-trash m-1"></i></a>
+        </span>
+        </li>
+       
+          {% endfor %}
+      </ul>
+      <div >
+    
+      </div>
+      
+</div>
+
+   </div>
+</div>
+
+ {% else %}
+<div ><h2 > No events Tommorrow</h2>
+</div> 
+<hr>
+ {% endif %}
+       
+<br>
+{% endif %}
 {% else %}
 {% if auth_mod %}
 <div class="container">

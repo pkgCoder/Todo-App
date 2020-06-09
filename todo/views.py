@@ -16,13 +16,27 @@ near to the deadline
 
     '''
     if request.GET.get('q') == None:
+        # today
+        to_day = TODO.objects.filter(deadline__day=datetime.datetime.now().day, 
+        deadline__month = datetime.datetime.now().month,
+        deadline__year = datetime.datetime.now().year
+        ).order_by('deadline')[:6]
+        to_morrow = TODO.objects.filter(deadline__day=datetime.datetime.now().day+1, 
+        deadline__month = datetime.datetime.now().month,
+        deadline__year = datetime.datetime.now().year
+        ).order_by('deadline')[:6]
+        yesterday = TODO.objects.filter(deadline__day=datetime.datetime.now().day-1, 
+        deadline__month = datetime.datetime.now().month,
+        deadline__year = datetime.datetime.now().year
+        ).order_by('deadline')[:6]
+
         to_do = TODO.objects.filter(
         deadline__day__gte=datetime.datetime.now().day,
 
         deadline__year = datetime.datetime.now().year,
 
         deadline__month__gte = datetime.datetime.now().month).order_by('deadline')[:6]
-        context = {'to_do':to_do}
+        context = {'to_do':to_do,'to_day':to_day, 'to_morrow':to_morrow , 'yesterday': yesterday}
         return render(request, 'todo/to_do.html',context)
     else:
         q = request.GET.get('q', None)
@@ -40,7 +54,8 @@ near to the deadline
         auth_mod = None
         if len(TODO.objects.all()) >= 1:
             auth_mod = True
-        context = {'to_do':to_do, 'auth_mod': auth_mod}
+        searched = True
+        context = {'to_do':to_do, 'auth_mod': auth_mod, 'searched':searched}
         return render(request, 'todo/to_do.html',context)
     
     
